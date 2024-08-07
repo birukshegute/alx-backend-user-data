@@ -5,6 +5,7 @@ A class BasicAuth that inherits from Auth
 
 from .auth import Auth
 import base64
+from models.user import User
 from typing import TypeVar
 
 
@@ -59,6 +60,7 @@ class BasicAuth(Auth):
             users = User.search({'email': user_email})
         except Exception:
             return None
-        if users[0].is_valid_password(user_pwd):
-            return users[0]
+        for user in users:
+            if user.is_valid_password(user_pwd):
+                return user
         return None
