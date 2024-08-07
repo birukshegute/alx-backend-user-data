@@ -5,6 +5,7 @@ A class BasicAuth that inherits from Auth
 
 from .auth import Auth
 import base64
+from typing import TypeVar
 
 
 class BasicAuth(Auth):
@@ -46,3 +47,18 @@ class BasicAuth(Auth):
         if ":" not in decoded_base64_authorization_header:
             return None, None
         return tuple(decoded_base64_authorization_header.split(':', 1))
+
+    def user_object_from_credentials(
+            self, user_email: str, user_pwd: str) -> TypeVar('User'):
+        """Returns the User instance based on his email and password"""
+        if not user_email or type(user_email) != str:
+            return None
+        if not user_pwd or type(user_pwd) != str:
+            return None
+        try:
+            users = User.search({'email': user_email})
+        except Exception:
+            return None
+        if users[0].is_valid_password(user_pwd):
+            return users[0]
+        return None
