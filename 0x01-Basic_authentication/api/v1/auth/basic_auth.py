@@ -8,4 +8,3 @@ from .auth import Auth
 
 class BasicAuth(Auth):
     """Empty for now"""
-
