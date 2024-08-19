@@ -5,6 +5,7 @@ Manages the API authentication.
 
 from flask import request
 import fnmatch
+from os import getenv
 from typing import List, TypeVar
 
 
